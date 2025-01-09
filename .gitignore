@@ -1,0 +1,9 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+minikube/django-secret.yml
+minikube/postgres-deployment.yml
+minikube/postgres-secret.yml
+minikube/postgres-service.yml
