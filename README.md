@@ -238,3 +238,7 @@ kubectl apply -f django-clearsessions.yml
 ```
 kubectl apply -f django-migrations.yml
 ```
+
+[Пример сайта](https://edu-sweet-sanderson.sirius-k8s.dvmn.org/)
+
+[Сслыка на инфраструктуру](https://sirius-env-registry.website.yandexcloud.net/edu-sweet-sanderson.html)
