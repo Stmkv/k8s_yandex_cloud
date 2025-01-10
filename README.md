@@ -146,3 +146,20 @@ kubectl apply -f <Название файла>
 ```
 
 Чтобы прмиенить миграции запустите файл `django-migrations.yml`
+
+## Запуск dev окружения
+
+Файлы конфигурации для запуска сервиса на Yandex Cloud хранятся в папке yc-sirius/edu-sweet-sanderson
+
+Сначала нужно подключиться к кластеру Yandex Cloud. Необходимо:
+
+1. [Инициализировать интерфейс командной строки](https://yandex.cloud/ru/docs/cli/quickstart#install)
+2. [Добавить учетную данные](https://yandex.cloud/ru/docs/managed-kubernetes/operations/connect/#kubectl-connect)
+
+```
+yc managed-kubernetes cluster get-credentials --id <cluster-id> --external
+```
+
+- Убедитесь, что настроен доступ к Kubernetes кластеру.
+- Примените Service и Pod
+- Вы увидите приветственную страницу nginx.
