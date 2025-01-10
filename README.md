@@ -206,3 +206,35 @@ psql "host=rc1b-qit*****0k.mdb.yandexcloud.net \
     user= <ваши данные>\
     password=<ваши данные>
 ```
+
+### Запуск django приложения
+
+Сначала запускаем деплоймент с самого django и секрет с ssl
+
+```
+kubectl apply -f postgres-secret.yml
+```
+
+```
+kubectl apply -f django-deployment.yml
+```
+
+Даллее разворчиваем секрет и сервис
+
+```
+kubectl apply -f django-secret.yml
+```
+
+```
+kubectl apply -f django-service.yml
+```
+
+Если запускаете проект впервые, то также понадобиться отмигрировать базу данных и поставить отчистку сессий на таймер:
+
+```
+kubectl apply -f django-clearsessions.yml
+```
+
+```
+kubectl apply -f django-migrations.yml
+```
