@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu
+  labels:
+    app: pg-client
+    env: dev
+spec:
+  volumes:
+    - name: secret-volume
+      secret:
+        secretName: pg-cert
+  containers:
+    - image: ubuntu
+      command: ['/bin/sh']
+      args:
+        - '-c'
+        - |
+          apt-get update &&
+          apt-get install -y postgresql-client &&
+          mkdir -p /root/.postgresql &&
+          sleep 3600
+      imagePullPolicy: IfNotPresent
+      name: ubuntu
+      volumeMounts:
+        - name: secret-volume
+          readOnly: true
+          mountPath: '/root/.postgresql'
+  restartPolicy: Always

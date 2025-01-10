@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      components: backend
+  template:
+    metadata:
+      labels:
+        components: backend
+    spec:
+      containers:
+        - name: django
+          image: stmkv03/django:v1.0
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: '/root/.postgresql'
+              name: pg-root-cert
+              readOnly: true
+          ports:
+            - containerPort: 80
+          envFrom:
+            - secretRef:
+                name: django-secret
+          resources:
+            limits:
+              memory: '500Mi'
+              cpu: '200m'
+      volumes:
+        - name: pg-root-cert
+          secret:
+            secretName: pg-root-cert
+            defaultMode: 384
