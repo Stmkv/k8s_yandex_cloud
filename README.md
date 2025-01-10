@@ -163,3 +163,46 @@ yc managed-kubernetes cluster get-credentials --id <cluster-id> --external
 - Убедитесь, что настроен доступ к Kubernetes кластеру.
 - Примените Service и Pod
 - Вы увидите приветственную страницу nginx.
+
+### Как подготовить dev окружение:
+
+Необходимо получить [SSL-сертификат.](https://yandex.cloud/ru/docs/managed-postgresql/operations/connect)
+
+```
+mkdir -p ~/.postgresql && \
+wget "https://storage.yandexcloud.net/cloud-certs/CA.pem" \
+     --output-document ~/.postgresql/root.crt && \
+chmod 0655 ~/.postgresql/root.crt
+```
+
+Найти его можно в `~/.postgresql/root.crt` - его необходимо закодировать в base64 и создать secret
+
+Пример:
+
+```
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pg-cert <Имя секрета>
+  namespace: <Ваш namespace>
+data:
+  root.crt: <Ваш сертификат в кодировке base64>
+
+```
+
+Теперь можно подключится к поду:
+
+```
+kubectl exec -it <Например ubuntu> -- /bin/bash
+```
+
+И после чего войти в psql
+
+```
+psql "host=rc1b-qit*****0k.mdb.yandexcloud.net \
+    port=6432 \
+    sslmode=require \ <Параметр указывает на то, что соединение обязательно должно использовать SSL>
+    dbname= <ваши данные>\
+    user= <ваши данные>\
+    password=<ваши данные>
+```
